@@ -1,0 +1,9 @@
+# To activate this run
+# pip install -r requirements.txt
+#
+# or go to Python Packages
+# to install all the required packages by hand
+#
+#
+Django==4.1.6
+django-extensions==3.2.1
