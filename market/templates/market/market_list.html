@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}
+    Current product
+{% endblock %}
+{% block content %}
+    <h1>Product list</h1>
+    {% if product_list %}
+        {% for product in product_list %}
+            <p>{{ product.name }}</p>
+            <p>{{ product.text }}</p>
+            <p>{{ product.price }}</p>
+        {% endfor %}
+    {% endif %}
+{% endblock %}
