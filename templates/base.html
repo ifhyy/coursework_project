@@ -1,8 +1,10 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     {% block head %}
     {% endblock %}
+    <link type="text/css" rel="stylesheet" href="{% static 'market/css/main.css' %}">
     <meta charset="UTF-8">
     <title>{% block title %}{% endblock %}</title>
 </head>

@@ -1,4 +1,17 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block navbar %}
+    <header>
+        <div class="logo">
+            <a href="{% url 'market:product_list' %}"><img src="{% static 'market/images/site-logo.png' %}" alt="Site Logo"></a>
+        </div>
+        <nav>
+            <ul>
+                <li><svg></svg></li>
+                <li><a href="#">My Listings</a></li>
+                <li><a href="#">Log In</a></li>
+            </ul>
+        </nav>
+    </header>
 
 {% endblock %}
