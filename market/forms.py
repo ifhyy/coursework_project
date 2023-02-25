@@ -23,6 +23,9 @@ class RegisterUserForm(UserCreationForm):
 
     def clean(self):
         email = self.cleaned_data.get('email')
+        name = self.cleaned_data.get('username')
         if User.objects.filter(email=email).exists():
             raise ValidationError('Email belongs to other user')
+        if User.objects.filter(username=name).exists():
+            raise ValidationError('User with such login already exists')
         return self.cleaned_data
