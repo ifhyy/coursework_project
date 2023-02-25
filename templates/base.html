@@ -9,7 +9,24 @@
     <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
-{% block navbar %}{% endblock %}
+{% block navbar %}
+    <header>
+        <div class="logo">
+            <a href="{% url 'market:product_list' %}"><img src="{% static 'market/images/site-logo.png' %}" alt="Site Logo"></a>
+        </div>
+        <nav>
+            <ul>
+                {% if request.user.is_authenticated %}
+                    <li><a href="#">My Listings</a></li>
+                    <li><a href="#">Profile</a></li>
+                    <li><a href="{% url 'market:logout' %}">Logout</a></li>
+                {% else %}
+                    <li><a href="{% url 'market:login' %}">Log in</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+{% endblock %}
 {% block content %}{% endblock %}
 </body>
 </html>

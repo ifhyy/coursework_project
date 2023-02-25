@@ -1,26 +1,21 @@
-{% extends 'navbar/navbar.html' %}
+{% extends 'base.html' %}
 {% load static %}
 {% block title %}
-    Current product
+    {{ settings.APP_NAME }}
 {% endblock %}
 {% block content %}
 <section class="products">
   <div class="filter">
     <h2>Filter Products</h2>
-    <div class="sort">
-      <h3>Sort by:</h3>
-      <button class="active" data-sort="rating">Rating</button>
-      <button data-sort="price">Price</button>
-      <button data-sort="date">Date</button>
-    </div>
-    <div class="category">
-      <h3>Category:</h3>
+    <div class="dropdown">
       <select>
-        <option value="all">All</option>
-        <option value="electronics">Electronics</option>
-        <option value="clothing">Clothing</option>
-        <option value="books">Books</option>
+        <option value="" disabled selected>Choose a category</option>
+          <option value="0">All</option>
+          {% for category in categories %}
+            <option value="{{ category.pk }}">{{ category.title }}</option>
+          {% endfor %}
       </select>
+        <div class="arrow-down"></div>
     </div>
   </div>
   <div class="product-list">

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}
+    Log In
+{% endblock %}
+{% block content %}
+    <h2>Log in</h2>
+
+    <form class="login-form" method="post">
+        {% csrf_token %}
+
+        <div class="form-error">{{ form.non_field_errors }}</div>
+
+        {% for field in form %}
+            <p><label class="login-label" for="{{ field.id_for_label }}">{{ field.label }}</label>{{ field }}</p>
+            <div class="form-error">{{ field.errors }}</div>
+        {% endfor %}
+
+        <button class="login-button" type="submit">Log in</button>
+        <div class="register">
+			Not registered yet? <a href="{% url 'market:register' %}">Register here</a>
+		</div>
+    </form>
+    
+
+
+{% endblock %}
