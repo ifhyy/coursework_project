@@ -1,4 +1,5 @@
 from django.contrib.auth import logout, login
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
@@ -6,7 +7,7 @@ from django.urls import reverse_lazy
 from .forms import *
 
 from .models import Product, Category
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 
 
 class ProductListView(ListView):
@@ -18,6 +19,15 @@ class ProductListView(ListView):
         categories = Category.objects.all()
         context['categories'] = categories
         return context
+
+
+class OwnerListView(LoginRequiredMixin, ListView):
+    model = Product
+    template_name = 'market/owner_list.html'
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        return qs.filter(owner=self.request.user)
 
 
 class ProductDetailView(DetailView):

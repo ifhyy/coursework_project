@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+      <div class="owner-product-list">
+      {% for product in product_list %}
+          <div style="display: flex; justify-content: space-between; margin-top: 20px; background: #f2f2f2;
+                                                                  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);">
+              <a href="{{ product.get_absolute_url }}" class="owner-product">
+                <div class="product-img">
+                    {% if product.picture %}
+                        <img src="{{ product.picture.url }}" alt="Listing #{{ product.pk }}">
+                    {% endif %}
+                </div>
+                <div class="product-description">
+                    <h3>{{ product.name }}</h3>
+                    <p>{{ product.text|truncatewords:15 }}</p>
+                </div>
+              </a>
+              <a href="#" style=" " class="owner-product-button">
+                  <div>
+                    <b>Edit</b>
+                  </div>
+              </a>
+          </div>
+      {% endfor %}
+    </div>
+{% endblock %}

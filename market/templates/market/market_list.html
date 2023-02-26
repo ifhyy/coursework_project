@@ -27,7 +27,7 @@
                 {% endif %}
             </div>
             <h3>{{ product.name }}</h3>
-            <p>{{ product.text }}</p>
+            <p>{{ product.text|truncatewords:50 }}</p>
             <p class="price">${{ product.price }}</p>
           </a>
       {% endfor %}

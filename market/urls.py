@@ -4,6 +4,7 @@ from . import views
 app_name= 'market'
 urlpatterns = [
     path('', views.ProductListView.as_view(), name='product_list'),
+    path('my_listings/', views.OwnerListView.as_view(), name='owner_list'),
     path('product/<int:pk>/', views.ProductDetailView.as_view(), name='product_detail'),
     path('register/', views.RegisterUser.as_view(), name='register'),
     path('login/', views.LoginUser.as_view(), name='login'),
