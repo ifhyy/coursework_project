@@ -2,6 +2,7 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django import forms
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
+from django.forms import ModelForm
 
 from .models import *
 
@@ -29,3 +30,17 @@ class RegisterUserForm(UserCreationForm):
         if User.objects.filter(username=name).exists():
             raise ValidationError('User with such login already exists')
         return self.cleaned_data
+
+
+class ProductForm(ModelForm):
+    class Meta:
+        model = Product
+        fields = ['name', 'text', 'price', 'picture', 'category']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'login-field'}),
+            'text': forms.Textarea(attrs={'class': 'login-field'}),
+            'price': forms.NumberInput(attrs={'class': 'login-field'}),
+            # 'category': forms.CheckboxSelectMultiple()
+
+
+        }

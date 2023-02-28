@@ -7,7 +7,7 @@ from django.urls import reverse_lazy
 from .forms import *
 
 from .models import Product, Category
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 
 class ProductListView(ListView):
@@ -18,7 +18,24 @@ class ProductListView(ListView):
         context = super().get_context_data(**kwargs)
         categories = Category.objects.all()
         context['categories'] = categories
+        context['cat_selected'] = 0
         return context
+
+
+class ProductCategoryView(ListView):
+    model = Product
+    template_name = 'market/market_list.html'
+
+    def get_queryset(self):
+        return Product.objects.filter(category_id=self.kwargs['cat_id'])
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        categories = Category.objects.all()
+        context['categories'] = categories
+        context['cat_selected'] = self.kwargs['cat_id']
+        return context
+
 
 
 class OwnerListView(LoginRequiredMixin, ListView):
@@ -32,6 +49,28 @@ class OwnerListView(LoginRequiredMixin, ListView):
 
 class ProductDetailView(DetailView):
     model = Product
+
+    def get_queryset(self):
+        return Product.objects.all().select_related('owner', 'category')
+
+
+class ProductUpdateView(LoginRequiredMixin, UpdateView):
+    model = Product
+    form_class = ProductForm
+    template_name = 'market/product_form.html'
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        return qs.filter(owner=self.request.user)
+
+
+class ProductDeleteView(LoginRequiredMixin, DeleteView):
+    model = Product
+    success_url = reverse_lazy('market:product_list')
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        return qs.filter(owner=self.request.user)
 
 
 class RegisterUser(CreateView):

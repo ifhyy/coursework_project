@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div style="width: 40%; margin: auto">
+        <h1 class=>Update {{ product.name }}</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" value="Submit">Save</button>
+            <button type="submit" value="Cancel" onclick="window.location.href='{{ object.get_absolute_url }}';return false;">Cancel</button>
+        </form>
+    </div>
+{% endblock %}

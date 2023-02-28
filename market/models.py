@@ -4,14 +4,38 @@ from django.conf import settings
 from django.urls import reverse
 
 
+class Category(models.Model):
+    title = models.CharField(max_length=100)
+    slug = models.SlugField(max_length=100, null=True)
+
+    def __str__(self):
+        return self.title
+
+    def get_absolute_url(self):
+        return reverse('market:product_category_list', kwargs={'cat_id': self.pk})
+
+    class Meta:
+        verbose_name = 'Category'
+        verbose_name_plural = 'Categories'
+        ordering = ['id']
+
+
 class Product(models.Model):
     name = models.CharField(max_length=100)
     text = models.TextField(max_length=400)
     price = models.FloatField(max_length=20)
-    picture = models.ImageField(upload_to="photos/%Y/%m/%d/")
+    picture = models.ImageField(upload_to="photos/%Y/%m/%d/", blank=True)
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    slug = models.SlugField(max_length=100, null=True)
+    category = models.ForeignKey(Category, null=True, on_delete=models.SET_NULL)
+    is_published = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = 'Listing'
+        verbose_name_plural = 'Listings'
+        ordering = ['-created_at', 'name']
 
     def get_absolute_url(self):
         return reverse('market:product_detail', kwargs={'pk': self.pk})
@@ -20,13 +44,5 @@ class Product(models.Model):
         return self.name
 
 
-class Category(models.Model):
-    title = models.CharField(max_length=100)
-    product = models.ManyToManyField(Product, blank=True)
 
-    def __str__(self):
-        return self.title
-
-    class Meta:
-        verbose_name_plural = 'Categories'
 

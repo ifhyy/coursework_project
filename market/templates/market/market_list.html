@@ -5,18 +5,22 @@
 {% endblock %}
 {% block content %}
 <section class="products">
-  <div class="filter">
-    <h2>Filter Products</h2>
-    <div class="dropdown">
-      <select>
-        <option value="" disabled selected>Choose a category</option>
-          <option value="0">All</option>
-          {% for category in categories %}
-            <option value="{{ category.pk }}">{{ category.title }}</option>
-          {% endfor %}
-      </select>
-        <div class="arrow-down"></div>
-    </div>
+  <div class="left-chapters">
+    <ul id="leftchapters">
+    {% if cat_selected == 0 %}
+        <li class="selected">All categories</li>
+    {% else %}
+        <li><a href="{% url 'market:product_list' %}">All categories</a></li>
+    {% endif %}
+
+    {% for category in categories %}
+        {% if category.pk == cat_selected %}
+            <li class="selected">{{ category.title }}</li>
+        {% else %}
+            <li><a href="{{ category.get_absolute_url }}">{{ category.title }}</a></li>
+        {% endif %}
+    {% endfor %}
+    </ul>
   </div>
   <div class="product-list">
       {% for product in product_list %}
@@ -27,7 +31,7 @@
                 {% endif %}
             </div>
             <h3>{{ product.name }}</h3>
-            <p>{{ product.text|truncatewords:50 }}</p>
+            <p>{{ product.text|linebreaks|truncatewords:40 }}</p>
             <p class="price">${{ product.price }}</p>
           </a>
       {% endfor %}
