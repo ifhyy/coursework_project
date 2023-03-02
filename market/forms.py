@@ -24,23 +24,23 @@ class RegisterUserForm(UserCreationForm):
 
     def clean(self):
         email = self.cleaned_data.get('email')
-        name = self.cleaned_data.get('username')
         if User.objects.filter(email=email).exists():
             raise ValidationError('Email belongs to other user')
-        if User.objects.filter(username=name).exists():
-            raise ValidationError('User with such login already exists')
-        return self.cleaned_data
+        return super().clean()
 
 
 class ProductForm(ModelForm):
     class Meta:
         model = Product
-        fields = ['name', 'text', 'price', 'picture', 'category']
+        fields = ['name', 'text', 'price', 'picture', 'category', 'slug']
         widgets = {
             'name': forms.TextInput(attrs={'class': 'login-field'}),
             'text': forms.Textarea(attrs={'class': 'login-field'}),
             'price': forms.NumberInput(attrs={'class': 'login-field'}),
-            # 'category': forms.CheckboxSelectMultiple()
-
-
         }
+
+    def clean(self):
+        price = self.cleaned_data.get('price')
+        if price < 0:
+            raise ValidationError('Price should be positive')
+        return super().clean()

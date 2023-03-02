@@ -14,7 +14,7 @@
     {% endif %}
 
     {% for category in categories %}
-        {% if category.pk == cat_selected %}
+        {% if category.slug == cat_selected %}
             <li class="selected">{{ category.title }}</li>
         {% else %}
             <li><a href="{{ category.get_absolute_url }}">{{ category.title }}</a></li>

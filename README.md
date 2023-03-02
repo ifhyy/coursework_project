@@ -3,7 +3,7 @@ Kyiv Polytechnic Institute 2023 Software Engineering course work
 
 contributors:
 - Artem Stupak IO-15
-- Shnaidruk Andrii IO-15
+- Andrii Shnaidruk  IO-15
 ## Topic
 A public marketplace website built with Django Framework.
 
@@ -16,6 +16,8 @@ In order to create your own listing you'll need to registrate first or log in if
 Since this project is not yet deployed, in order to try it, you'll need to run it on your local machine.
 - clone this repository into directory on your pc.
 - make sure you created virtual environment as interpreter
-- open terminal
-- run: pip install -r requirements.txt
-- run: python manage.py runserver
+- open terminal and run following commands:
+  - pip install -r requirements.txt
+  - python manage.py makemigrations
+  - python manage.py migrate
+  - python manage.py runserver

@@ -6,13 +6,13 @@ from django.urls import reverse
 
 class Category(models.Model):
     title = models.CharField(max_length=100)
-    slug = models.SlugField(max_length=100, null=True)
+    slug = models.SlugField(max_length=100, unique=True, db_index=True, verbose_name='URL')
 
     def __str__(self):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('market:product_category_list', kwargs={'cat_id': self.pk})
+        return reverse('market:product_category_list', kwargs={'cat_slug': self.slug})
 
     class Meta:
         verbose_name = 'Category'
@@ -24,10 +24,10 @@ class Product(models.Model):
     name = models.CharField(max_length=100)
     text = models.TextField(max_length=400)
     price = models.FloatField(max_length=20)
-    picture = models.ImageField(upload_to="photos/%Y/%m/%d/", blank=True)
+    picture = models.ImageField(upload_to="photos/%Y/%m/%d/")
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    slug = models.SlugField(max_length=100, null=True)
-    category = models.ForeignKey(Category, null=True, on_delete=models.SET_NULL)
+    slug = models.SlugField(max_length=100, unique=True, db_index=True, verbose_name='URL')
+    category = models.ForeignKey(Category, on_delete=models.PROTECT)
     is_published = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

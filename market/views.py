@@ -27,15 +27,14 @@ class ProductCategoryView(ListView):
     template_name = 'market/market_list.html'
 
     def get_queryset(self):
-        return Product.objects.filter(category_id=self.kwargs['cat_id'])
+        return Product.objects.filter(category__slug=self.kwargs['cat_slug'])
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         categories = Category.objects.all()
         context['categories'] = categories
-        context['cat_selected'] = self.kwargs['cat_id']
+        context['cat_selected'] = self.kwargs['cat_slug']
         return context
-
 
 
 class OwnerListView(LoginRequiredMixin, ListView):
@@ -52,6 +51,18 @@ class ProductDetailView(DetailView):
 
     def get_queryset(self):
         return Product.objects.all().select_related('owner', 'category')
+
+
+class ProductCreateView(LoginRequiredMixin, CreateView):
+    model = Product
+    form_class = ProductForm
+    template_name = 'market/product_form.html'
+
+    def form_valid(self, form):
+        f = form.save(commit=False)
+        f.owner = self.request.user
+        f.save()
+        return super().form_valid(form)
 
 
 class ProductUpdateView(LoginRequiredMixin, UpdateView):
