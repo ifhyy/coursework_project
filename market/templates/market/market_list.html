@@ -22,19 +22,42 @@
     {% endfor %}
     </ul>
   </div>
-  <div class="product-list">
-      {% for product in product_list %}
-          <a href="{{ product.get_absolute_url }}" class="product">
-            <div class="product-img">
-                {% if product.picture %}
-                    <img src="{{ product.picture.url }}" alt="Listing #{{ product.pk }}">
+    <div class="right-chapters">
+      <div class="product-list">
+          {% for product in product_list %}
+              <a href="{{ product.get_absolute_url }}" class="product">
+                <div class="product-img">
+                    {% if product.picture %}
+                        <img src="{{ product.picture.url }}" alt="Listing #{{ product.pk }}">
+                    {% endif %}
+                </div>
+                <h3>{{ product.name }}</h3>
+                <p>{{ product.text|linebreaks|truncatewords:40 }}</p>
+                <p class="price">${{ product.price }}</p>
+              </a>
+          {% endfor %}
+      </div>
+      {% if page_obj.has_other_pages %}
+      <nav class="pagination">
+          <ul>
+              {% if page_obj.has_previous %}
+                <li><a href="?page={{ page_obj.previous_page_number }}">&lt;</a></li>
+              {% endif %}
+              {% for page in paginator.page_range %}
+                {% if page_obj.number == page %}
+                    <li>{{ page }}</li>
+                {% elif page >= page_obj.number|add:-2 and page <= page_obj.number|add:2 %}
+                    <li>
+                        <a href="?page={{ page }}">{{ page }}</a>
+                    </li>
                 {% endif %}
-            </div>
-            <h3>{{ product.name }}</h3>
-            <p>{{ product.text|linebreaks|truncatewords:40 }}</p>
-            <p class="price">${{ product.price }}</p>
-          </a>
-      {% endfor %}
+              {% endfor %}
+              {% if page_obj.has_next %}
+                <li><a href="?page={{ page_obj.next_page_number }}">&gt;</a></li>
+              {% endif %}
+          </ul>
+      </nav>
+      {% endif %}
     </div>
-</section>>
+</section>
 {% endblock %}

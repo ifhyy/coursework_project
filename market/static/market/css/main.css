@@ -15,11 +15,11 @@ body {
   max-height: 40px;
 }
 
-nav {
+.header-list {
   height: 2em;
 }
 
-nav ul {
+.header-list ul {
   height: 100%;
   display: flex;
   list-style: none;
@@ -27,19 +27,19 @@ nav ul {
   padding: 0;
 }
 
-nav ul li {
+.header-list ul li {
   margin: 0 10px;
 }
 
-nav ul li:first-child {
+.header-list ul li:first-child {
   margin-left: 0;
 }
 
-nav ul li:last-child {
+.header-list ul li:last-child {
   margin-right: 0;
 }
 
-nav ul li a {
+.header-list ul li a {
   display: inline-block;
   padding: 10px 15px;
   color: #333;
@@ -47,7 +47,7 @@ nav ul li a {
   font-weight: bold;
 }
 
-nav ul li a:hover {
+.header-list ul li a:hover {
   color: #fff;
   background-color: #333;
 }
@@ -59,9 +59,9 @@ nav ul li a:hover {
 }
 
 .product-list {
-  width: 80%;
   display: flex;
   flex-wrap: wrap;
+    justify-content: space-between;
 }
 
 .product-list h2 {
@@ -351,3 +351,41 @@ h2 {
 }
 
 .left-chapters ul li a:hover { color: #CC0000; }
+
+.right-chapters {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 80%
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 50px;
+}
+
+.pagination li {
+  display: inline-block;
+  margin: 0 5px;
+}
+
+.pagination a {
+  display: block;
+  padding: 10px 15px;
+  background-color: #f5f5f5;
+  color: #333;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.pagination a:hover {
+  background-color: #bbb;
+}
+
+.pagination .active a {
+  background-color: #333;
+  color: #fff;
+}
