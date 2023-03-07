@@ -2,6 +2,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.conf import settings
 from django.urls import reverse
+from autoslug import AutoSlugField
 
 
 class Category(models.Model):
@@ -26,7 +27,7 @@ class Product(models.Model):
     price = models.FloatField(max_length=20)
     picture = models.ImageField(upload_to="photos/%Y/%m/%d/")
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    slug = models.SlugField(max_length=100, unique=True, db_index=True, verbose_name='URL')
+    slug = AutoSlugField(populate_from='name', unique=True, editable=True)
     category = models.ForeignKey(Category, on_delete=models.PROTECT)
     is_published = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)

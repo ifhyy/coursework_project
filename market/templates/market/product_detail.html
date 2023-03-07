@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+    <div class="go-back">
+        <input class="back-btn" type=button value="Go back" onClick="javascript:history.go(-1);">
+    </div>
     <div class="product-detail">
     {% if product.picture %}
         <div class="product-image">

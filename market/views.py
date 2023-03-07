@@ -11,7 +11,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 
 
 class ProductListView(ListView):
-    paginate_by = 3
+    paginate_by = 6
     model = Product
     template_name = 'market/market_list.html'
 

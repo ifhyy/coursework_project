@@ -32,7 +32,7 @@ class RegisterUserForm(UserCreationForm):
 class ProductForm(ModelForm):
     class Meta:
         model = Product
-        fields = ['name', 'text', 'price', 'picture', 'category', 'slug']
+        fields = ['name', 'text', 'price', 'picture', 'category']
         widgets = {
             'name': forms.TextInput(attrs={'class': 'login-field'}),
             'text': forms.Textarea(attrs={'class': 'login-field'}),
