@@ -27,8 +27,8 @@
               </form>
           {% else %}
               <div>
-              <a href="{% url 'market:product_update' product.pk %}"><img class="tool-ico" src="{% static 'market/images/266146.png' %}" alt="update"></a>
-              <a href="{% url 'market:product_delete' product.pk %}"><img class="tool-ico" src="{% static 'market/images/542724.png' %}" alt="delete"></a>
+              <a href="{% url 'market:product_update' product.slug %}"><img class="tool-ico" src="{% static 'market/images/266146.png' %}" alt="update"></a>
+              <a href="{% url 'market:product_delete' product.slug %}"><img class="tool-ico" src="{% static 'market/images/542724.png' %}" alt="delete"></a>
               </div>
           {% endif %}
       </div>
