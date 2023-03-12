@@ -10,3 +10,4 @@ django-extensions==3.2.1
 django-debug-toolbar~=3.8.1
 psycopg2
 django-autoslug~=1.9.8
+python-decouple

@@ -19,7 +19,7 @@
                     <p>{{ product.text|truncatewords:15 }}</p>
                 </div>
               </a>
-              <a href="{% url 'market:product_update' product.pk %}" class="owner-product-button">
+              <a href="{% url 'market:product_update' product.slug %}" class="owner-product-button">
                   <div>
                     <b>Edit</b>
                   </div>
