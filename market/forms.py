@@ -22,11 +22,11 @@ class RegisterUserForm(UserCreationForm):
         model = User
         fields = ('username', 'email', 'password1', 'password2')
 
-    def clean(self):
+    def clean_email(self):
         email = self.cleaned_data.get('email')
         if User.objects.filter(email=email).exists():
             raise ValidationError('Email belongs to other user')
-        return super().clean()
+        return email
 
 
 class ProductForm(ModelForm):
@@ -39,8 +39,8 @@ class ProductForm(ModelForm):
             'price': forms.NumberInput(attrs={'class': 'login-field'}),
         }
 
-    def clean(self):
+    def clean_price(self):
         price = self.cleaned_data.get('price')
         if price < 0:
             raise ValidationError('Price should be positive')
-        return super().clean()
+        return price

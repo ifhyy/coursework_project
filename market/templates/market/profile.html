@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ request.user.username }}
+{% endblock %}
+
+{% block content %}
+    <div class="profile-container">
+        <div class="profile-image"><img src="{{ user.image.url }}" alt="user.username"></div>
+        <div class="profile-information">
+            <p>Username: {{ user.username }}</p>
+            <p>Email: {% if user.email %} {{ user.email }} {% else %}Unknown{% endif %} </p>
+        </div>
+    </div>
+
+{% endblock %}
+

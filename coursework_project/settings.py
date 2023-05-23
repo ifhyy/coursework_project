@@ -143,6 +143,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # LOGIN_REDIRECT_URL = '/'
 
+# Email server configuration
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'bozzya7@gmail.com'
+EMAIL_HOST_PASSWORD = 'wvidlaqiosujmchm'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
 REST_FRAMEWORK = {
     "DEFAULT_RENDERER_CLASSES": [
         'rest_framework.renderers.JSONRenderer',

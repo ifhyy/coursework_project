@@ -20,11 +20,7 @@
 
 
           {% if not product.owner == user %}
-              <form class="product-form" action="#">
-                  <label for="quantity">Quantity:</label>
-                  <input type="number" id="quantity" name="quantity" value="1" min="1">
-                  <button type="submit">Add to Cart</button>
-              </form>
+              <a href="#"><button type="submit">Reserve this product</button></a>
           {% else %}
               <div>
               <a href="{% url 'market:product_update' product.slug %}"><img class="tool-ico" src="{% static 'market/images/266146.png' %}" alt="update"></a>

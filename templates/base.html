@@ -17,13 +17,15 @@
         </div>
         <nav class="header-list">
             <ul>
-                {% if request.user.is_authenticated %}
-                    <li><a href="{% url 'market:owner_list' %}">My Listings</a></li>
-                    <li><a href="#">Profile</a></li>
-                    <li><a href="{% url 'market:logout' %}">Logout</a></li>
-                {% else %}
-                    <li><a href="{% url 'market:login' %}">Log in</a></li>
-                {% endif %}
+                {% with request.user as user %}
+                    {% if user.is_authenticated %}
+                        <li><a href="{% url 'market:owner_list' %}">My Listings</a></li>
+                        <li><a href="{{ user.get_absolute_url }}">Profile</a></li>
+                        <li><a href="{% url 'market:logout' %}">Logout</a></li>
+                    {% else %}
+                        <li><a href="{% url 'market:login' %}">Log in</a></li>
+                    {% endif %}
+                {% endwith %}
             </ul>
         </nav>
     </header>

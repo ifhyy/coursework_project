@@ -1,8 +1,11 @@
 from django.contrib.auth import logout, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy
+from django.views import View
+from django.contrib.auth.forms import UserChangeForm
+
 from .forms import *
 
 from .models import Product, Category
@@ -86,6 +89,20 @@ class ProductDeleteView(LoginRequiredMixin, DeleteView):
     def get_queryset(self):
         qs = super().get_queryset()
         return qs.filter(owner=self.request.user)
+
+
+class UserProfileView(DetailView):
+    template_name = 'market/profile.html'
+    context_object_name = 'user'
+    def get_object(self, queryset=None):
+        name = self.request.user.username
+        pk = self.request.user.pk
+        inst = get_object_or_404(User, pk=pk)
+        return inst
+
+
+class UserProfileUpdateView(UpdateView):
+    form_class = UserChangeForm
 
 
 class RegisterUser(CreateView):
