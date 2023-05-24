@@ -1,6 +1,7 @@
 from django.contrib.auth import logout, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
+from django.contrib.auth.models import User
 from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import View
@@ -92,6 +93,7 @@ class ProductDeleteView(LoginRequiredMixin, DeleteView):
 
 
 class UserProfileView(DetailView):
+    model = User
     template_name = 'market/profile.html'
     context_object_name = 'user'
     def get_object(self, queryset=None):

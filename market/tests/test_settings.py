@@ -13,8 +13,15 @@ class Settings(TestCase):
         super(Settings, cls).setUpClass()
 
         cls.category = Category.objects.create(title='electronics', slug='electronics')
-        cls.owner = User.objects.create_superuser(username='stupk', email='dod@gmail.com',
-                                      password='qwer123456789')
+        cls.login = 'stupk'
+        cls.login2 = 'rob'
+        cls.password = 'qwer123456789'
+
+        cls.owner = User.objects.create_superuser(username=cls.login, email='dod@gmail.com',
+                                      password=cls.password)
+
+        cls.unprivileged_user = User.objects.create_user(username=cls.login2, email='fff@gmail.com',
+                                                         password=cls.password)
         # Создаем временную папку для медиа-файлов;
         # на момент теста медиа папка будет переопределена
         settings.MEDIA_ROOT = tempfile.mkdtemp(dir=settings.BASE_DIR)
