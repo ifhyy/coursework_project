@@ -57,7 +57,7 @@ class ProductModelTest(Settings):
         self.assertEqual(meta.ordering, ['-created_at', 'name'])
 
     def test_product_get_absolute_url(self):
-        self.assertURLEqual(self.product.get_absolute_url(), '/product/3/car/')
+        self.assertURLEqual(self.product.get_absolute_url(), f'/product/{self.product.id}/car/')
 
 
 class CategoryModelTest(Settings):
@@ -89,7 +89,7 @@ class CategoryModelTest(Settings):
 
 class UserModelTest(Settings):
     def test_get_absolute_url(self):
-        self.assertURLEqual(self.owner.get_absolute_url(), '/profile/user/stupk/4/')
+        self.assertURLEqual(self.owner.get_absolute_url(), f'/profile/user/stupk/{self.owner.id}/')
 
     def test_user_image(self):
         image = self.owner._meta.get_field('image')
