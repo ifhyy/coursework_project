@@ -1,31 +1,31 @@
-from django.urls import reverse
+from market.forms import ProductForm, RegisterUserForm
 
 from .test_settings import Settings
-from market.models import Product
 
 
-class MarketFormTest(Settings):
-
-    def test_valid_product_form(self):
-        product_count = Product.objects.count()
-        self.assertEqual(product_count, 1)
+class ProductFormTest(Settings):
+    def test_negative_price(self):
         form_data = {
             'name': 'ball',
             'text': 'a ball for basketball game',
-            'price': 14,
+            'price': -14,
             'category': self.category,
         }
-        response = self.client.post(reverse('market:product_create'),
-                                    data=form_data, follow=True)
+        form = ProductForm(data=form_data)
+        self.assertEqual(
+            form.errors['price'], ['Price should be positive']
+        )
 
-        # We can't create new objects without being logged in
-        self.assertEqual(response.status_code, 404)
 
-        self.client.login(username=self.login, password=self.password)
-        response = self.client.post(reverse('market:product_create'),
-                                    data=form_data, follow=True)
-        print(response)
-        print(Product.objects.all())
-        product_count = Product.objects.count()
-        self.assertEqual(product_count, 2)
+class RegisterUserFormTest(Settings):
+
+    def test_repeated_email(self):
+        form_data = {
+            'username': 'user',
+            'email': self.owner.email,
+            'password1': '12345',
+            'password2': '12345'
+        }
+        form = RegisterUserForm(data=form_data)
+        self.assertEqual(form.errors['email'], ['Email belongs to other user'])
 

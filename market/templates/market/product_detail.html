@@ -18,14 +18,15 @@
         <p class="price">${{ product.price }}</p>
         <p>{{ product.category }}</p>
 
-
-          {% if not product.owner == user %}
-              <a href="#"><button type="submit">Reserve this product</button></a>
-          {% else %}
-              <div>
-              <a href="{% url 'market:product_update' product.slug %}"><img class="tool-ico" src="{% static 'market/images/266146.png' %}" alt="update"></a>
-              <a href="{% url 'market:product_delete' product.slug %}"><img class="tool-ico" src="{% static 'market/images/542724.png' %}" alt="delete"></a>
-              </div>
+          {% if user.is_authenticated %}
+              {% if not product.owner == user %}
+                  <a href="#"><button type="submit">Reserve this product</button></a>
+              {% else %}
+                  <div>
+                  <a href="{% url 'market:product_update' product.slug %}"><img class="tool-ico" src="{% static 'market/images/266146.png' %}" alt="update"></a>
+                  <a href="{% url 'market:product_delete' product.slug %}"><img class="tool-ico" src="{% static 'market/images/542724.png' %}" alt="delete"></a>
+                  </div>
+              {% endif %}
           {% endif %}
       </div>
     </div>
