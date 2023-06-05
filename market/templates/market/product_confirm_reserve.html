@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Reserve product
+{% endblock %}
+{% block content %}
+    <div style="width: 50%; margin: auto">
+        <h1>Are you sure you want to purchase {{ product.name }} ?</h1>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" value="Submit">Yes, buy.</button>
+            <button type="submit" value="Cancel" onclick="window.location.href='{{ object.get_absolute_url }}';return false;">Cancel</button>
+        </form>
+    </div>
+{% endblock %}

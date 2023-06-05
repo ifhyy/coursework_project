@@ -14,4 +14,6 @@ urlpatterns = [
     path('register/', views.RegisterUser.as_view(), name='register'),
     path('login/', views.LoginUser.as_view(), name='login'),
     path('logout/', views.logout_user, name='logout'),
+    path('product/reserve/success/', views.reserve_success, name='product_reserve_success'),
+    path('product/reserve/<slug:slug>/', views.ReserveProductView.as_view(), name='product_reserve'),
     ]

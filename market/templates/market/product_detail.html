@@ -20,7 +20,7 @@
 
           {% if user.is_authenticated %}
               {% if not product.owner == user %}
-                  <a href="#"><button type="submit">Reserve this product</button></a>
+                  <a href="{% url 'market:product_reserve' product.slug%}"><button type="submit">Reserve this product</button></a>
               {% else %}
                   <div>
                   <a href="{% url 'market:product_update' product.slug %}"><img class="tool-ico" src="{% static 'market/images/266146.png' %}" alt="update"></a>

@@ -2,7 +2,8 @@ from django.contrib.auth import logout, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.models import User
-from django.shortcuts import redirect, get_object_or_404
+from django.core.mail import send_mail
+from django.shortcuts import redirect, get_object_or_404, render
 from django.urls import reverse_lazy
 from django.views import View
 from django.contrib.auth.forms import UserChangeForm
@@ -130,3 +131,24 @@ class LoginUser(LoginView):
 def logout_user(request):
     logout(request)
     return redirect('market:login')
+
+
+class ReserveProductView(LoginRequiredMixin, DeleteView):
+    model = Product
+    template_name = 'market/product_confirm_reserve.html'
+    success_url = reverse_lazy('market:product_reserve_success')
+    context_object_name = 'product'
+
+    def form_valid(self, form):
+        product = self.get_object()
+        send_mail('New customer',
+                  f'{self.request.user} would like to purchase your product {product.name} for {product.price}$\n'
+                  f'contact with customer via E-mail {self.request.user.email}',
+                  'bozzya7@gmail.com',
+                  [f'{product.owner.email}'])
+        return super().form_valid(form)
+
+
+def reserve_success(request):
+    return render(request, template_name='market/product_reserve_success.html')
+
